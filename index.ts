@@ -5,6 +5,11 @@ startConnection();
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () =>
-  console.log(`🔥 Server running on http://localhost:${PORT} 🔥`),
+const server = app.listen(
+  PORT,
+  () =>
+    process.env.NODE_ENV !== 'test' &&
+    console.log(`🔥 Server running on http://localhost:${PORT} 🔥`),
 );
+
+export {server};

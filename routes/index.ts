@@ -26,7 +26,7 @@ router.post('/tasks', async (req: Request, res: Response): Promise<void> => {
     const {title, description} = req.body;
     const task = new Task({title, description});
     await task.save();
-    res.json(task);
+    res.status(201).json(task);
   } catch (err) {
     res.status(500).send(err);
   }
