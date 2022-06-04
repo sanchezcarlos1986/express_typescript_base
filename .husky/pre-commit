@@ -1,4 +1,1 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npm run branch-naming-check && yarn lint-staged
+npm test
