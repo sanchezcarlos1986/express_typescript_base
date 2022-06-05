@@ -15,6 +15,7 @@
     "branch-naming-check": "branch-naming-check \"^(master|develop)|(feature|bugfix|refactor|ci|hotfix|jira|issue|renovate)/[a-zA-Z0-9._-]+$\"",
     "test": "NODE_ENV=test PORT=8080 jest --verbose",
     "test:watch": "npm run test -- --watch",
+    "test:unit": "npm run test",
     "prepare": "husky install"
   },
   "keywords": [],
