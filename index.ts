@@ -1,15 +1,25 @@
-import app from './app';
-import {startConnection} from './database';
+import {startConnection} from './config/db';
 
 startConnection();
 
-const PORT = process.env.PORT || 3000;
+import {ApolloServer} from 'apollo-server';
+import {resolvers} from './db/resolvers';
+import {typeDefs} from './db/schema';
 
-const server = app.listen(
-  PORT,
-  () =>
-    process.env.NODE_ENV !== 'test' &&
-    console.log(`🔥 Server running on http://localhost:${PORT} 🔥`),
-);
+// server
+const server = new ApolloServer({
+  typeDefs: typeDefs,
+  resolvers: resolvers,
+  context: () => {
+    const miContext = 'Hola';
 
-export {server};
+    return {
+      miContext,
+    };
+  },
+});
+
+// run server
+server
+  .listen()
+  .then(({url}) => console.log(`🔥 GraphQL server running on: ${url} 🔥`));
