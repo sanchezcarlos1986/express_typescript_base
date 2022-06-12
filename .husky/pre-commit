@@ -5,4 +5,4 @@ echo \"== Checking branch name ==\";
 npm run branch-naming-check
 
 echo \"== Running Lint Staged ==\";
-npx lint-staged
+npm run lint-staged
