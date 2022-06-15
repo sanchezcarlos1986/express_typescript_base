@@ -57,5 +57,6 @@ export const typeDefs = gql`
 
     # Product
     newProduct(input: ProductInput): Product
+    updateProduct(id: ID!, input: ProductInput): Product
   }
 `;

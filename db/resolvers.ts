@@ -114,5 +114,20 @@ export const resolvers = {
         throw new Error(`Error creating a new product: ${error}`);
       }
     },
+    updateProduct: async (_: any, {id, input}: any) => {
+      try {
+        let product = await Product.findById(id);
+
+        if (!product) {
+          throw new Error('Product not found');
+        }
+
+        product = await Product.findOneAndUpdate({_id: id}, input, {new: true});
+
+        return product;
+      } catch (error) {
+        throw new Error(`Error updating product: ${error}`);
+      }
+    },
   },
 };
