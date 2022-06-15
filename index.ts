@@ -11,10 +11,10 @@ const server = new ApolloServer({
   typeDefs: typeDefs,
   resolvers: resolvers,
   context: () => {
-    const miContext = 'Hola';
+    const myContext = 'Hola';
 
     return {
-      miContext,
+      myContext,
     };
   },
 });
