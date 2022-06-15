@@ -129,5 +129,20 @@ export const resolvers = {
         throw new Error(`Error updating product: ${error}`);
       }
     },
+    deleteProduct: async (_: any, {id}: any) => {
+      try {
+        const product = await Product.findById(id);
+
+        if (!product) {
+          throw new Error('Product not found');
+        }
+
+        await Product.findOneAndDelete({_id: id});
+
+        return 'Product deleted';
+      } catch (error) {
+        throw new Error(`Error updating product: ${error}`);
+      }
+    },
   },
 };
