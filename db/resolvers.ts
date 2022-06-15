@@ -18,10 +18,48 @@ type User = {
   created: Date;
 };
 
-// type UserInput = {
-//   email: string;
-//   password: string;
-// };
+type Context = {
+  user: User;
+};
+
+type TokenPayload = {
+  token: string;
+};
+
+type IdPayload = {
+  id: string;
+};
+
+type UserInput = {
+  input: {
+    name: string;
+    lastName: string;
+    email: string;
+    password: string;
+  };
+};
+
+type AuthInput = {
+  input: {email: string; password: string};
+};
+
+type ClientInput = {
+  input: {
+    name: string;
+    lastName: string;
+    company: string;
+    email: string;
+    phone: string;
+  };
+};
+
+type ProductInput = {
+  input: {
+    name: string;
+    stock: number;
+    price: number;
+  };
+};
 
 // infoToSave, key, expiresIn
 const createToken = (user: User, secret: string | any, expiresIn: string) => {
@@ -32,7 +70,7 @@ const createToken = (user: User, secret: string | any, expiresIn: string) => {
 
 export const resolvers = {
   Query: {
-    getUser: async (_: any, {token}: any) => {
+    getUser: async (_: any, {token}: TokenPayload) => {
       try {
         const user = await jwt.verify(token, process.env.SECRET as string);
 
@@ -50,7 +88,7 @@ export const resolvers = {
         throw new Error(`Error getting all products: ${error}`);
       }
     },
-    getProduct: async (_: any, {id}: {id: string}) => {
+    getProduct: async (_: any, {id}: IdPayload) => {
       const product = await Product.findById(id);
 
       if (!product) {
@@ -69,7 +107,7 @@ export const resolvers = {
         throw new Error(`Error getting all clients: ${error}`);
       }
     },
-    getClientsBySeller: async (_: any, {}: any, context: any) => {
+    getClientsBySeller: async (_: any, {}: any, context: Context) => {
       try {
         const clients = await Client.find({seller: context.user._id});
 
@@ -78,7 +116,7 @@ export const resolvers = {
         throw new Error(`Error getting all clients: ${error}`);
       }
     },
-    getClient: async (_: any, {id}: {id: string}, context: any) => {
+    getClient: async (_: any, {id}: IdPayload, context: Context) => {
       const client = await Client.findById(id);
 
       if (!client) {
@@ -96,7 +134,7 @@ export const resolvers = {
   },
   Mutation: {
     // User
-    newUser: async (_: any, {input}: any) => {
+    newUser: async (_: any, {input}: UserInput) => {
       const {email, password} = input;
       const userAlreadyExists = await User.findOne({email});
 
@@ -116,7 +154,7 @@ export const resolvers = {
         throw new Error(`Error creating a new user: ${error}`);
       }
     },
-    authUser: async (_: any, {input}: any) => {
+    authUser: async (_: any, {input}: AuthInput) => {
       const {email, password} = input;
       const userAlreadyExists = await User.findOne({email});
 
@@ -140,7 +178,7 @@ export const resolvers = {
       };
     },
     // Product
-    newProduct: async (_: any, {input}: any) => {
+    newProduct: async (_: any, {input}: ProductInput) => {
       try {
         const user = new Product(input);
         user.save();
@@ -149,7 +187,10 @@ export const resolvers = {
         throw new Error(`Error creating a new product: ${error}`);
       }
     },
-    updateProduct: async (_: any, {id, input}: any) => {
+    updateProduct: async (
+      _: any,
+      {id, input}: {id: string; input: ProductInput},
+    ) => {
       try {
         let product = await Product.findById(id);
 
@@ -164,7 +205,7 @@ export const resolvers = {
         throw new Error(`Error updating product: ${error}`);
       }
     },
-    deleteProduct: async (_: any, {id}: any) => {
+    deleteProduct: async (_: any, {id}: {id: string}) => {
       try {
         const product = await Product.findById(id);
 
@@ -180,7 +221,7 @@ export const resolvers = {
       }
     },
     // Client
-    newClient: async (_: any, {input}: any, context: any) => {
+    newClient: async (_: any, {input}: ClientInput, context: Context) => {
       const {email} = input;
 
       const clientAlreadyExists = await Client.findOne({email});
@@ -196,6 +237,52 @@ export const resolvers = {
         return result;
       } catch (error) {
         throw new Error(`Error creating a new user: ${error}`);
+      }
+    },
+    updateClient: async (
+      _: any,
+      {id, input}: {id: string; input: ClientInput},
+      context: Context,
+    ) => {
+      try {
+        let client = await Client.findById(id);
+
+        if (!client) {
+          throw new Error('Client not found');
+        }
+
+        if (String(client.seller) !== context.user._id) {
+          throw new Error(
+            `This user don't have the permissions to update this client`,
+          );
+        }
+
+        client = await Client.findOneAndUpdate({_id: id}, input, {new: true});
+
+        return client;
+      } catch (error) {
+        throw new Error(`Error updating client: ${error}`);
+      }
+    },
+    deleteClient: async (_: any, {id}: {id: string}, context: Context) => {
+      try {
+        const client = await Client.findById(id);
+
+        if (!client) {
+          throw new Error('Client not found');
+        }
+
+        if (String(client.seller) !== context.user._id) {
+          throw new Error(
+            `This user don't have the permissions to delete this client`,
+          );
+        }
+
+        await Client.findOneAndDelete({_id: id});
+
+        return 'Client deleted';
+      } catch (error) {
+        throw new Error(`Error updating client: ${error}`);
       }
     },
   },

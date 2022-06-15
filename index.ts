@@ -1,16 +1,15 @@
-import {startConnection} from './config/db';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
+import {ApolloServer} from 'apollo-server';
+import {resolvers} from './db/resolvers';
+import {typeDefs} from './db/schema';
+import {startConnection} from './config/db';
 
 config({
   path: 'variables.env',
 });
 
 startConnection();
-
-import {ApolloServer} from 'apollo-server';
-import {resolvers} from './db/resolvers';
-import {typeDefs} from './db/schema';
 
 // server
 const server = new ApolloServer({
