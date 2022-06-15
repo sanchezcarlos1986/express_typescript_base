@@ -49,6 +49,15 @@ export const resolvers = {
         throw new Error(`Error getting all products: ${error}`);
       }
     },
+    getProduct: async (_: any, {id}: {id: string}) => {
+      const product = await Product.findById(id);
+
+      if (!product) {
+        throw new Error('Product not found');
+      }
+
+      return product;
+    },
   },
   Mutation: {
     // User
