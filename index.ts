@@ -1,4 +1,10 @@
 import {startConnection} from './config/db';
+import jwt from 'jsonwebtoken';
+import {config} from 'dotenv';
+
+config({
+  path: 'variables.env',
+});
 
 startConnection();
 
@@ -10,12 +16,20 @@ import {typeDefs} from './db/schema';
 const server = new ApolloServer({
   typeDefs: typeDefs,
   resolvers: resolvers,
-  context: () => {
-    const myContext = 'Hola';
+  context: ({req}) => {
+    const token = req.headers['authorization'] || '';
 
-    return {
-      myContext,
-    };
+    if (token) {
+      try {
+        const user = jwt.verify(token, process.env.SECRET as string);
+
+        return {
+          user,
+        };
+      } catch (error) {
+        throw new Error(`Error verifying user in context: ${error}`);
+      }
+    }
   },
 });
 

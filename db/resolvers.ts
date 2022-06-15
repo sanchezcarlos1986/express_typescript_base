@@ -1,5 +1,6 @@
 import {User} from '../models/User';
 import {Product} from '../models/Product';
+import {Client} from '../models/Client';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
@@ -33,9 +34,9 @@ export const resolvers = {
   Query: {
     getUser: async (_: any, {token}: any) => {
       try {
-        const userId = await jwt.verify(token, process.env.SECRET as string);
+        const user = await jwt.verify(token, process.env.SECRET as string);
 
-        return userId;
+        return user;
       } catch (error) {
         throw new Error(`Error getting user: ${error}`);
       }
@@ -57,6 +58,40 @@ export const resolvers = {
       }
 
       return product;
+    },
+    // Client
+    getClients: async () => {
+      try {
+        const clients = await Client.find({});
+
+        return clients;
+      } catch (error) {
+        throw new Error(`Error getting all clients: ${error}`);
+      }
+    },
+    getClientsBySeller: async (_: any, {}: any, context: any) => {
+      try {
+        const clients = await Client.find({seller: context.user._id});
+
+        return clients;
+      } catch (error) {
+        throw new Error(`Error getting all clients: ${error}`);
+      }
+    },
+    getClient: async (_: any, {id}: {id: string}, context: any) => {
+      const client = await Client.findById(id);
+
+      if (!client) {
+        throw new Error('Client not found');
+      }
+
+      if (String(client.seller) !== context.user._id) {
+        throw new Error(
+          `This user don't have the permissions to see this client`,
+        );
+      }
+
+      return client;
     },
   },
   Mutation: {
@@ -142,6 +177,25 @@ export const resolvers = {
         return 'Product deleted';
       } catch (error) {
         throw new Error(`Error updating product: ${error}`);
+      }
+    },
+    // Client
+    newClient: async (_: any, {input}: any, context: any) => {
+      const {email} = input;
+
+      const clientAlreadyExists = await Client.findOne({email});
+
+      if (clientAlreadyExists) {
+        throw new Error('This client is already registered');
+      }
+
+      try {
+        const newClient = new Client(input);
+        newClient.seller = context.user._id;
+        const result = await newClient.save();
+        return result;
+      } catch (error) {
+        throw new Error(`Error creating a new user: ${error}`);
       }
     },
   },

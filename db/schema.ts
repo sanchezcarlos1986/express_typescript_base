@@ -9,6 +9,17 @@ export const typeDefs = gql`
     created: String
   }
 
+  type Client {
+    id: ID
+    name: String
+    lastName: String
+    company: String
+    email: String
+    phone: String
+    created: String
+    seller: ID
+  }
+
   type Product {
     id: ID
     name: String
@@ -27,6 +38,15 @@ export const typeDefs = gql`
     lastName: String!
     email: String!
     password: String!
+  }
+
+  # Client
+  input ClientInput {
+    name: String!
+    lastName: String!
+    company: String!
+    email: String!
+    phone: String
   }
 
   #Product
@@ -50,6 +70,12 @@ export const typeDefs = gql`
     getProduct(id: ID!): Product
   }
 
+  type Query {
+    getClients: [Client]
+    getClientsBySeller: [Client]
+    getClient(id: ID!): Client
+  }
+
   type Mutation {
     # User
     newUser(input: UserInput): User
@@ -59,5 +85,8 @@ export const typeDefs = gql`
     newProduct(input: ProductInput): Product
     updateProduct(id: ID!, input: ProductInput): Product
     deleteProduct(id: ID!): String
+
+    # Client
+    newClient(input: ClientInput): Client
   }
 `;
