@@ -4,65 +4,27 @@ import {Client} from '../models/Client';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
+import {
+  UserType,
+  TokenPayload,
+  IdPayload,
+  AuthInput,
+  ClientInput,
+  Context,
+  ProductInput,
+  UserInput,
+} from '../types';
 
 config({
   path: 'variables.env',
 });
 
-type User = {
-  _id: string;
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
-  created: Date;
-};
-
-type Context = {
-  user: User;
-};
-
-type TokenPayload = {
-  token: string;
-};
-
-type IdPayload = {
-  id: string;
-};
-
-type UserInput = {
-  input: {
-    name: string;
-    lastName: string;
-    email: string;
-    password: string;
-  };
-};
-
-type AuthInput = {
-  input: {email: string; password: string};
-};
-
-type ClientInput = {
-  input: {
-    name: string;
-    lastName: string;
-    company: string;
-    email: string;
-    phone: string;
-  };
-};
-
-type ProductInput = {
-  input: {
-    name: string;
-    stock: number;
-    price: number;
-  };
-};
-
 // infoToSave, key, expiresIn
-const createToken = (user: User, secret: string | any, expiresIn: string) => {
+const createToken = (
+  user: UserType,
+  secret: string | any,
+  expiresIn: string,
+) => {
   const {_id, email, name, lastName} = user;
 
   return jwt.sign({_id, email, name, lastName}, secret, {expiresIn});
