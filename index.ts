@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
 import {ApolloServer} from 'apollo-server';
-import {typeDefs} from './graphql/schemas/schema';
 import {startConnection} from './config/db';
-import {resolvers} from './graphql/resolvers';
+import {typeDefs, resolvers} from './graphql';
 
 config({
   path: 'variables.env',

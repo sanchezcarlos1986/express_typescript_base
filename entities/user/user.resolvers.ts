@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
-import {User} from '../../models/User';
+import {User} from './User.model';
 import {UserType, TokenPayload, AuthInput, UserInput} from '../../types';
 
 config({

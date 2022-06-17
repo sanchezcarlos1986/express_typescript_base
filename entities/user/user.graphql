@@ -1,0 +1,32 @@
+input UserInput {
+  name: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type Token {
+  token: String
+}
+
+type User {
+  id: ID
+  name: String
+  lastName: String
+  email: String
+  created: String
+}
+
+type Query {
+  getUser(token: String!): User
+}
+
+type Mutation {
+  newUser(input: UserInput): User
+  authUser(input: AuthInput): Token
+}
