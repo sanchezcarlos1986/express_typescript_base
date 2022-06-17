@@ -1,8 +1,10 @@
+import path from 'path';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
 import {ApolloServer} from 'apollo-server';
-import {resolvers} from './db/resolvers';
-import {typeDefs} from './db/schema';
+import {mergeResolvers} from '@graphql-tools/merge';
+import {loadFilesSync} from '@graphql-tools/load-files';
+import {typeDefs} from './graphql/schemas/schema';
 import {startConnection} from './config/db';
 
 config({
@@ -10,6 +12,10 @@ config({
 });
 
 startConnection();
+
+// Resolvers
+const resolverFiles = loadFilesSync(path.join(__dirname, 'graphql/resolvers/'));
+const resolvers = mergeResolvers(resolverFiles);
 
 // server
 const server = new ApolloServer({
