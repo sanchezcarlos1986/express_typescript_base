@@ -1,5 +1,6 @@
 import {Product} from './Product.model';
-import {IdPayload, ProductInput} from '../../types';
+import {IdPayload} from '../../types';
+import {ProductInput} from './product.types';
 
 export default {
   Query: {

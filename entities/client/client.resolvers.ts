@@ -1,5 +1,6 @@
-import {IdPayload, ClientInput, Context} from '../../types';
+import {IdPayload, Context} from '../../types';
 import {Client} from './Client.model';
+import {ClientInput} from './client.types';
 
 export default {
   Query: {
