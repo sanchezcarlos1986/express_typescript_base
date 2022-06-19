@@ -1,12 +1,33 @@
-import {Order} from './Order.model';
-import {Client} from '../client/Client.model';
-import {OrderInput} from './order.types';
 import {Context} from '../../types';
 import {ClientType} from '../client/client.types';
-import {Product} from '../product/Product.model';
 import {ProductType} from '../product/product.types';
+import {OrderInput, OrderType} from './order.types';
+import {Order} from './Order.model';
+import {Client} from '../client/Client.model';
+import {Product} from '../product/Product.model';
 
 export default {
+  Query: {
+    getOrders: async () => {
+      try {
+        const orders: Array<OrderType> = await Order.find({});
+        return orders;
+      } catch (error) {
+        throw new Error(`Error getting the Orders: ${error}`);
+      }
+    },
+    getOrdersBySeller: async (_: any, {}: any, context: Context) => {
+      try {
+        const orders: Array<OrderType> = await Order.find({
+          seller: context.user._id,
+        });
+
+        return orders;
+      } catch (error) {
+        throw new Error(`Error getting all orders for this seller: ${error}`);
+      }
+    },
+  },
   Mutation: {
     newOrder: async (_: any, {input}: OrderInput, context: Context) => {
       try {

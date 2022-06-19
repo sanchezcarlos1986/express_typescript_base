@@ -16,3 +16,18 @@ export type OrderInput = {
     created: string;
   };
 };
+
+type OrderGroup = {
+  id: string;
+  quantity: number;
+};
+
+export type OrderType = {
+  _id: string;
+  order: [OrderGroup];
+  total: number;
+  client: string;
+  seller: string;
+  state: OrderState;
+  created: string;
+};

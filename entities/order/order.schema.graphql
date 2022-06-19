@@ -31,9 +31,10 @@ enum OrderState {
   CANCELLED
 }
 
-# type Query {
-
-# }
+type Query {
+  getOrders: [Order]
+  getOrdersBySeller: [Order]
+}
 
 type Mutation {
   newOrder(input: OrderInput): Order

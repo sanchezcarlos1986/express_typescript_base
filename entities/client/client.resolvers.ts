@@ -19,7 +19,7 @@ export default {
 
         return clients;
       } catch (error) {
-        throw new Error(`Error getting all clients: ${error}`);
+        throw new Error(`Error getting all clients for this seller: ${error}`);
       }
     },
     getClient: async (_: any, {id}: IdPayload, context: Context) => {

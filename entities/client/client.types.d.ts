@@ -9,7 +9,7 @@ export type ClientInput = {
 };
 
 export type ClientType = {
-  id: string;
+  _id: string;
   name: string;
   lastName: string;
   company: string;
