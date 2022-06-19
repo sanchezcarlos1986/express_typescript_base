@@ -146,5 +146,26 @@ export default {
         throw new Error(`Error updating client: ${error}`);
       }
     },
+    deleteOrder: async (_: any, {id}: {id: string}, context: Context) => {
+      try {
+        const order = await Order.findById(id);
+
+        if (!order) {
+          throw new Error('Order not found');
+        }
+
+        if (String(order.seller) !== context.user._id) {
+          throw new Error(
+            `This user don't have the permissions to delete this order`,
+          );
+        }
+
+        await Order.findOneAndDelete({_id: id});
+
+        return 'Order deleted';
+      } catch (error) {
+        throw new Error(`Error updating order: ${error}`);
+      }
+    },
   },
 };
