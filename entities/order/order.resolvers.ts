@@ -93,5 +93,30 @@ export default {
         throw new Error(`Error creating a new order: ${error}`);
       }
     },
+    updateOrder: async (
+      _: any,
+      {id, input}: {id: string; input: OrderInput},
+      context: Context,
+    ) => {
+      try {
+        let order = await Order.findById(id);
+
+        if (!order) {
+          throw new Error('Order not found');
+        }
+
+        if (String(order.seller) !== context.user._id) {
+          throw new Error(
+            `This user don't have the permissions to update this order`,
+          );
+        }
+
+        order = await Order.findOneAndUpdate({_id: id}, input, {new: true});
+
+        return order;
+      } catch (error) {
+        throw new Error(`Error updating client: ${error}`);
+      }
+    },
   },
 };
