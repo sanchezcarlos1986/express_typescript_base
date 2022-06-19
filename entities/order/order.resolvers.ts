@@ -48,7 +48,11 @@ export default {
     },
   },
   Mutation: {
-    newOrder: async (_: any, {input}: OrderInput, context: Context) => {
+    newOrder: async (
+      _: any,
+      {input}: {input: OrderInput},
+      context: Context,
+    ) => {
       try {
         const {client} = input;
 
@@ -100,12 +104,17 @@ export default {
     ) => {
       try {
         let order = await Order.findById(id);
+        const client = await Client.findById(input.client);
 
         if (!order) {
           throw new Error('Order not found');
         }
 
-        if (String(order.seller) !== context.user._id) {
+        if (!client) {
+          throw new Error('Client not found');
+        }
+
+        if (String(client.seller) !== context.user._id) {
           throw new Error(
             `This user don't have the permissions to update this order`,
           );
