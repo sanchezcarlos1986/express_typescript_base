@@ -27,6 +27,25 @@ export default {
         throw new Error(`Error getting all orders for this seller: ${error}`);
       }
     },
+    getOrder: async (_: any, {id}: {id: string}, context: Context) => {
+      try {
+        const order: OrderType | null = await Order.findById(id);
+
+        if (!order) {
+          throw new Error(`Order not found`);
+        }
+
+        if (String(order.seller) !== context.user._id) {
+          throw new Error(
+            `This user don't have enough permissions for this Order`,
+          );
+        }
+
+        return order;
+      } catch (error) {
+        throw new Error(`Error getting the Orders: ${error}`);
+      }
+    },
   },
   Mutation: {
     newOrder: async (_: any, {input}: OrderInput, context: Context) => {
