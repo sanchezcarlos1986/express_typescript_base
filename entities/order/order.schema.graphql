@@ -20,8 +20,8 @@ input OrderProductInput {
 
 input OrderInput {
   order: [OrderProductInput]
-  total: Float!
-  client: ID!
+  total: Float
+  client: ID
   state: OrderState
 }
 

@@ -71,9 +71,9 @@ export default {
         }
 
         for await (const article of input.order) {
-          const {id} = article;
-
-          const product: ProductType | null = await Product.findById(id);
+          const product: ProductType | null = await Product.findById(
+            article.id,
+          );
 
           if (!product) {
             throw new Error(`This product is not registered`);
@@ -118,6 +118,25 @@ export default {
           throw new Error(
             `This user don't have the permissions to update this order`,
           );
+        }
+
+        for await (const article of input.order) {
+          const product: ProductType | null = await Product.findById(
+            article.id,
+          );
+
+          if (!product) {
+            throw new Error(`This product is not registered`);
+          }
+
+          if (article.quantity > product?.stock) {
+            throw new Error(
+              `The product "${product.name}" doesn't have enough stock`,
+            );
+          } else {
+            product.stock = product.stock - article.quantity;
+            await product.save();
+          }
         }
 
         order = await Order.findOneAndUpdate({_id: id}, input, {new: true});
