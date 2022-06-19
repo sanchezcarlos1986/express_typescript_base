@@ -1,8 +1,6 @@
 type OrderProductInput = {
-  input: {
-    id: string;
-    quantity: number;
-  };
+  id: string;
+  quantity: number;
 };
 
 type OrderState = 'PENDING' | 'COMPLETED' | 'CANCELLED';
