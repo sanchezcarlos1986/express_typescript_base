@@ -1,0 +1,40 @@
+type Order {
+  id: ID
+  order: [OrderGroup]
+  total: Float
+  client: ID
+  seller: ID
+  state: OrderState
+  created: String
+}
+
+type OrderGroup {
+  id: ID
+  quantity: Int
+}
+
+input OrderProductInput {
+  id: ID
+  quantity: Int
+}
+
+input OrderInput {
+  order: [OrderProductInput]
+  total: Float!
+  client: ID!
+  state: OrderState
+}
+
+enum OrderState {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+# type Query {
+
+# }
+
+type Mutation {
+  newOrder(input: OrderInput): Order
+}

@@ -7,10 +7,14 @@ config({
 
 export const startConnection = async (): Promise<void> => {
   try {
-    const connectionString: string = process.env.DB_MONGO || '';
+    const connectionString: string =
+      process.env.NODE_ENV === 'test'
+        ? String(process.env.DB_MONGO_TEST)
+        : String(process.env.DB_MONGO) || '';
 
     await connect(connectionString);
-    process.env.NODE_ENV !== 'test' && console.log(`✅ MongoDB running ✅`);
+
+    console.log(`✅ MongoDB running on: ${connectionString} ✅`);
   } catch (err) {
     console.error(`Error trying to connect to mongodb: ${err}`);
   }

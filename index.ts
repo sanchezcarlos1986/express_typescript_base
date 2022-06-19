@@ -11,7 +11,7 @@ config({
 startConnection();
 
 // server
-const server = new ApolloServer({
+export const server = new ApolloServer({
   typeDefs: typeDefs,
   resolvers: resolvers,
   context: ({req}) => {

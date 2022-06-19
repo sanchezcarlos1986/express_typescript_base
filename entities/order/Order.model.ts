@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const OrdersSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
   order: {
     type: Array,
     required: true,
@@ -29,4 +29,4 @@ const OrdersSchema = new mongoose.Schema({
   },
 });
 
-export const Orders = mongoose.model('Orders', OrdersSchema);
+export const Order = mongoose.model('Order', OrderSchema);
