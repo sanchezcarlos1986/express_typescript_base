@@ -35,6 +35,7 @@ type Query {
   getOrders: [Order]
   getOrdersBySeller: [Order]
   getOrder(id: ID!): Order
+  getOrderByState(state: String!): [Order]
 }
 
 type Mutation {

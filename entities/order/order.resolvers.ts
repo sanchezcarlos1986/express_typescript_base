@@ -46,6 +46,22 @@ export default {
         throw new Error(`Error getting the Orders: ${error}`);
       }
     },
+    getOrderByState: async (
+      _: any,
+      {state}: {state: string},
+      context: Context,
+    ) => {
+      try {
+        const orders: Array<OrderType> = await Order.find({
+          state: state,
+          seller: context.user._id,
+        });
+
+        return orders;
+      } catch (error) {
+        throw new Error(`Error getting all orders by state: ${error}`);
+      }
+    },
   },
   Mutation: {
     newOrder: async (
