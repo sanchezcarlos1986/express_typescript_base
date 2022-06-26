@@ -9,6 +9,11 @@ type Client {
   seller: ID
 }
 
+type TopClient {
+  total: Float
+  client: [Client]
+}
+
 input ClientInput {
   name: String!
   lastName: String!
@@ -21,6 +26,7 @@ type Query {
   getClients: [Client]
   getClientsBySeller: [Client]
   getClient(id: ID!): Client
+  getBestClients: [TopClient]
 }
 
 type Mutation {

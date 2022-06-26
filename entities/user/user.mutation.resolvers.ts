@@ -2,7 +2,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import {config} from 'dotenv';
 import {User} from './User.model';
-import {AuthInput, TokenPayload, UserInput, UserType} from './user.types';
+import {AuthInput, UserInput, UserType} from './user.types';
 
 config({
   path: 'variables.env',
@@ -20,17 +20,6 @@ const createToken = (
 };
 
 export default {
-  Query: {
-    getUser: async (_: any, {token}: TokenPayload) => {
-      try {
-        const user = await jwt.verify(token, process.env.SECRET as string);
-
-        return user;
-      } catch (error) {
-        throw new Error(`Error getting user: ${error}`);
-      }
-    },
-  },
   Mutation: {
     newUser: async (_: any, {input}: UserInput) => {
       const {email, password} = input;
