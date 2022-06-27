@@ -1,4 +1,6 @@
 import {IdPayload, Context} from '../../types';
+import {Order} from '../order/Order.model';
+// import {OrderStatusEnum} from '../order/order.types';
 import {Client} from './Client.model';
 
 export default {
@@ -35,6 +37,30 @@ export default {
       }
 
       return client;
+    },
+    getBestClients: async (_: any, {}: any) => {
+      const clients = await Order.aggregate([
+        {$match: {state: 'COMPLETED'}},
+        {
+          $group: {
+            _id: '$client',
+            total: {$sum: '$total'},
+          },
+        },
+        {
+          $lookup: {
+            from: 'clients',
+            localField: '_id',
+            foreignField: '_id',
+            as: 'client',
+          },
+        },
+        {
+          $sort: {total: -1},
+        },
+      ]);
+
+      return clients;
     },
   },
 };

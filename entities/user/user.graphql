@@ -22,8 +22,14 @@ type User {
   created: String
 }
 
+type TopUser {
+  total: Float
+  user: [User]
+}
+
 type Query {
   getUser(token: String!): User
+  getBestUsers: [TopUser]
 }
 
 type Mutation {

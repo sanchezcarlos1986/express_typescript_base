@@ -3,7 +3,16 @@ type OrderProductInput = {
   quantity: number;
 };
 
-type OrderState = 'PENDING' | 'COMPLETED' | 'CANCELLED';
+export enum OrderStatusEnum {
+  'PENDING',
+  'COMPLETED',
+  'CANCELLED',
+}
+
+type OrderState =
+  | OrderStatusEnum.PENDING
+  | OrderStatusEnum.COMPLETED
+  | OrderStatusEnum.CANCELLED;
 
 export type OrderInput = {
   id: string;
