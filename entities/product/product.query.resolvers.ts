@@ -21,5 +21,10 @@ export default {
 
       return product;
     },
+    searchProduct: async (_: any, {input}: {input: string}) => {
+      const products = await Product.find({$text: {$search: input}});
+
+      return products;
+    },
   },
 };

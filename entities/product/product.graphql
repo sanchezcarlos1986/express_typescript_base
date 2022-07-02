@@ -16,6 +16,7 @@ input ProductInput {
 type Query {
   getProducts: [Product]
   getProduct(id: ID!): Product
+  searchProduct(input: String!): [Product]
 }
 
 type Mutation {
