@@ -7,18 +7,13 @@
     "jest": true
   },
   "plugins": ["@typescript-eslint", "prettier", "jest"],
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "google",
-    "prettier",
-    "next/core-web-vitals"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended"],
   "rules": {
     "no-alert": ["error"],
     "no-debugger": ["error"],
-    "no-console": ["error"],
+    "no-console": ["warn"],
     "no-undef": ["error"],
-    "max-len": ["error", { "code": 1200 }],
+    "max-len": ["error", {"code": 1200}],
     "arrow-parens": [2, "as-needed"]
   }
 }

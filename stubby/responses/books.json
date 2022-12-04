@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "learn clean architecture",
+    "price": 10000
+  },
+  {
+    "id": 2,
+    "title": "learn CSS",
+    "price": 10000
+  }
+]

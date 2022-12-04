@@ -1,0 +1,10 @@
+- request: # GET available airlines to use with FFN program
+    url: ^/api/books$
+    method: GET
+  response:
+    status: 500
+    latency: 300
+    headers:
+      content-type: application/json
+      server: stubby
+    file: responses/books.json

@@ -1,9 +1,9 @@
 import app from './app';
-import {startConnection} from './database';
+// import {startConnection} from './database';
 
-startConnection();
+// startConnection();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const server = app.listen(
   PORT,
