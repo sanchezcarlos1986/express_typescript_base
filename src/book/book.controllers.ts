@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import {errorHandler} from '../errorHandlers';
+import {ErrorType} from '../types/error';
 
 const books = [
   {
@@ -18,7 +19,7 @@ export const getAllBooks = async (_: any, res: Response): Promise<void> => {
   try {
     res.send(books);
   } catch (err) {
-    errorHandler(err, res);
+    errorHandler(err as ErrorType);
   }
 };
 
