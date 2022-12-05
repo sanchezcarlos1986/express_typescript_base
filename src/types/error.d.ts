@@ -8,6 +8,7 @@ export type ErrorResponse = {
 };
 
 export type ErrorType = {
-  status: number;
-  response: ErrorResponse;
+  code: string;
+  status?: number;
+  response?: ErrorResponse;
 };
