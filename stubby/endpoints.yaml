@@ -1,5 +1,5 @@
 - request: # GET available airlines to use with FFN program
-    url: ^/api/books$
+    url: ^/api/users$
     method: GET
   response:
     status: 500
@@ -7,4 +7,4 @@
     headers:
       content-type: application/json
       server: stubby
-    file: responses/books.json
+    file: responses/users.json

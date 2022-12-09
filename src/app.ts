@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import booksRoutes from './book/book.router';
+import usersRoutes from './user/user.router';
 import {errorHandler} from './errorHandlers';
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Routes
-app.use('/api/books', booksRoutes);
+app.use('/api/users', usersRoutes);
 
 // Error Handler
 app.use(errorHandler);

@@ -2,9 +2,9 @@ import {NextFunction, Request, Response} from 'express';
 
 export const errorHandler = (
   err: any,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   return res.status(err?.status ?? 500).send({
     name: 'ServiceErrorHandler',
