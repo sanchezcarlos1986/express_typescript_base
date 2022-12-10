@@ -1,0 +1,52 @@
+paths:
+  /api/users/{id}:
+    get:
+      tags:
+        - User
+      security:
+        - authToken: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 200
+                  data:
+                    $ref: "#/components/schemas/user"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 403
+                  message:
+                    type: string
+                    example: Unauthorized request. "authorization" is required.
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 404
+                  message:
+                    type: string
+                    example: User not found.

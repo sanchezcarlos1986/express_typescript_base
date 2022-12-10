@@ -1,4 +1,4 @@
-import {Company, IncomingUser} from './user';
+import {Company, IncomingUser} from './user.types';
 
 class UserDTO {
   id: number;

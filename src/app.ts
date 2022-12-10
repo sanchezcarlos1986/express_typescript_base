@@ -3,8 +3,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import usersRoutes from './user/user.router';
 import {errorHandler} from './errorHandlers';
+import {APP} from './shared/types';
 
-const app = express();
+const app: APP = express();
 
 // Middlewares
 app.use(cors());

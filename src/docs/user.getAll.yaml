@@ -1,0 +1,35 @@
+paths:
+  /api/users:
+    get:
+      tags:
+        - User
+      security:
+        - authToken: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/user"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 403
+                  message:
+                    type: string
+                    example: Unauthorized request. "authorization" is required.

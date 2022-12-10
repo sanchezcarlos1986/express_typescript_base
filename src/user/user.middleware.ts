@@ -5,8 +5,12 @@ export const userMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  if (!req.headers['token']) {
-    res.status(403).json({message: 'Unauthorized request. Token is required.'});
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    res
+      .status(403)
+      .json({message: 'Unauthorized request. "authorization" is required.'});
   } else {
     next();
   }

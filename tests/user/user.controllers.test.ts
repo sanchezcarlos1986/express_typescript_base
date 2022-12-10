@@ -14,7 +14,7 @@ describe('GET /users', () => {
   it('should return 200 getting all users', async () => {
     await request(app)
       .get('/api/users')
-      .set('token', 'thebest1token')
+      .set('authorization', 'thebest1token')
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
@@ -22,7 +22,7 @@ describe('GET /users', () => {
   it('should return 200 getting one user by id', async () => {
     await request(app)
       .get('/api/users/1')
-      .set('token', 'thebest1token')
+      .set('authorization', 'thebest1token')
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });

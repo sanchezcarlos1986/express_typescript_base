@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
-import {IncomingUser, OutterUser} from './user';
+import {IncomingUser, OutterUser} from './user.types';
 import {UserDTO} from './user.dto';
 
 export const getAllUsers = async (
@@ -41,10 +41,10 @@ export const getUserById = async (
     );
 
     if (!user) {
-      res.sendStatus(404).json({message: 'User not found'});
+      res.status(404).json({message: 'User not found'});
+    } else {
+      res.send(user);
     }
-
-    res.send(user);
   } catch (error) {
     next(error);
   }
