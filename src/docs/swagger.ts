@@ -1,6 +1,6 @@
 import swaggerJSDoc, {OAS3Options} from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import {APP, PORT} from '../shared/types';
+import {APP, PORT_TYPE} from '../shared/types';
 
 // Metadata info about our API
 const swaggerOptions: OAS3Options = {
@@ -50,14 +50,16 @@ const swaggerOptions: OAS3Options = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 // Function to setup our docs
-export const swaggerDocs = (app: APP, port: PORT) => {
+export const swaggerDocs = (app: APP, port: PORT_TYPE) => {
   app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   app.get('/api/v1/docs.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
   });
 
-  console.log(
-    `Version 1 Docs are available at http://localhost:${port}/api/v1/docs`,
-  );
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(
+      `Version 1 Docs are available at http://localhost:${port}/api/v1/docs`,
+    );
+  }
 };

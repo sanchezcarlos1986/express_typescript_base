@@ -1,37 +1,34 @@
-export interface IncomingUser {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: Address;
-  phone: string;
-  website: string;
-  company: Company;
-}
-
-export interface OutterUser {
+export type User = {
   id: number;
   name: string;
   username: string;
   email: string;
   company: Company;
-}
+};
 
-export interface Address {
+export type Address = {
   street: string;
   suite: string;
   city: string;
   zipcode: string;
   geo: Geo;
-}
+};
 
-export interface Geo {
+export type Geo = {
   lat: string;
   lng: string;
-}
+};
 
-export interface Company {
+export type Company = {
   name: string;
   catchPhrase: string;
   bs: string;
+};
+
+export interface Repository {
+  getAll: () => User[];
+  getOneById: (id: string) => User | undefined;
+  create: (data: User) => User;
+  update: (id: string) => void;
+  delete: (id: string) => void;
 }

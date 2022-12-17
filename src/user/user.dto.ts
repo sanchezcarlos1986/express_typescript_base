@@ -1,4 +1,4 @@
-import {Company, IncomingUser} from './user.types';
+import {Company, User} from './user.types';
 
 class UserDTO {
   id: number;
@@ -6,7 +6,7 @@ class UserDTO {
   username: string;
   email: string;
   company: Company;
-  constructor(data: IncomingUser) {
+  constructor(data: User) {
     this.id = data.id;
     this.name = data.name;
     this.username = data.username;
