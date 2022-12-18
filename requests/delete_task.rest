@@ -1,1 +1,2 @@
-DELETE http://localhost:3000/api/tasks/607228ff6b4ab010575ac476
+DELETE http://localhost:3001/api/users/2
+authorization: qwetr

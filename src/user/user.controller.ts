@@ -1,5 +1,4 @@
 import {NextFunction, Request, Response} from 'express';
-import {UserDTO} from './user.dto';
 
 import type {Repository, User} from './user.types.d';
 import * as userUseCases from './user.usecases';
@@ -21,23 +20,14 @@ export const userController = (repository: Repository) => {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const result: User[] = await fetch(
-        'https://jsonplaceholder.typicode.com/users',
-      )
-        .then(res => res.json())
-        .then(data => {
-          return data.map((user: User) => new UserDTO(user));
-        });
-
-      const user: User | undefined = result.find(
-        u => String(u.id) === req.params.id,
-      );
+      const userId = req?.params?.id;
+      const user = await userUseCases.getUserById(repository, userId);
 
       if (!user) {
-        res.status(404).json({message: 'User not found'});
-      } else {
-        res.send(user);
+        res.status(404).send({message: 'User not found'});
       }
+
+      res.send(user);
     } catch (error) {
       next(error);
     }
@@ -49,10 +39,10 @@ export const userController = (repository: Repository) => {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const userdata = req?.body?.user;
+      const userdata = req?.body;
       const user = await userUseCases.createUser(repository, userdata);
 
-      res.send(user);
+      res.status(201).send(user);
     } catch (error) {
       next(error);
     }
@@ -64,7 +54,20 @@ export const userController = (repository: Repository) => {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      res.send('updateUser');
+      const userId = req?.params?.id;
+      const userdata = req?.body;
+
+      const updatedUser = await userUseCases.updateUser(
+        repository,
+        userId,
+        userdata,
+      );
+
+      if (!updatedUser) {
+        res.status(404).send({message: 'User not found'});
+      }
+
+      res.send(updatedUser);
     } catch (error) {
       next(error);
     }
@@ -76,7 +79,14 @@ export const userController = (repository: Repository) => {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      res.send('deleteUser');
+      const userId = req?.params?.id;
+      const response = await userUseCases.deleteUser(repository, userId);
+
+      if (!response) {
+        res.status(404).send({message: 'User not found'});
+      }
+
+      res.send(`User id: ${userId} deleted.`);
     } catch (error) {
       next(error);
     }

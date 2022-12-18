@@ -1,4 +1,5 @@
-PUT http://localhost:3000/api/tasks/123
+PUT http://localhost:3001/api/users/1
+authorization: qwetr
 Content-Type: application/json
 
 {

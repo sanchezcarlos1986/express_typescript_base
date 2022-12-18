@@ -29,6 +29,6 @@ export interface Repository {
   getAll: () => User[];
   getOneById: (id: string) => User | undefined;
   create: (data: User) => User;
-  update: (id: string) => void;
-  delete: (id: string) => void;
+  update: (id: string, user: User) => User;
+  delete: (id: string) => User[] | null;
 }

@@ -5,10 +5,28 @@ export const getUsers = async (userRepository: Repository) => {
   return users;
 };
 
+export const getUserById = (userRepository: Repository, userId: string) => {
+  return userRepository.getOneById(userId);
+};
+
 export const createUser = async (
   userRepository: Repository,
   userData: User,
 ) => {
-  const user: User = await userRepository.create(userData);
-  return user;
+  return userRepository.create(userData);
+};
+
+export const updateUser = async (
+  userRepository: Repository,
+  userId: string,
+  userData: User,
+) => {
+  return userRepository.update(userId, userData);
+};
+
+export const deleteUser = async (
+  userRepository: Repository,
+  userId: string,
+) => {
+  return userRepository.delete(userId);
 };
