@@ -1,18 +1,14 @@
 import {Router} from 'express';
+import {validateCreate} from '../validator';
+import {InMemoryUserRepository} from './infrastructure/implementations/inMemory/inMemoryUserRepository.repository';
 import {userController} from './user.controller';
-import {userMiddleware} from './user.middleware';
-import {UserRepository} from './user.repository';
 
 const router: Router = Router();
-const userRepository = new UserRepository();
-const controller = userController(userRepository);
+const inMemoryUserRepository = new InMemoryUserRepository();
+const controller = userController(inMemoryUserRepository);
 
 router
-  .use(userMiddleware)
-  .get('/:id', controller.getUserById)
   .get('/', controller.getUsers)
-  .post('/', controller.createUser)
-  .put('/:id', controller.updateUser)
-  .delete('/:id', controller.deleteUser);
+  .post('/', validateCreate, controller.createUser);
 
 export default router;
