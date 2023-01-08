@@ -1,4 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
+import httpStatus, {INTERNAL_SERVER_ERROR} from 'http-status';
 
 export const errorHandler = (
   err: any,
@@ -6,9 +7,11 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction,
 ) => {
-  return res.status(err?.status ?? 500).send({
+  const defaultStatus = INTERNAL_SERVER_ERROR;
+
+  return res.status(err?.status ?? defaultStatus).send({
     name: 'ServiceErrorHandler',
-    status: err?.status ?? 500,
-    error: err?.code ?? 'INTERNAL_SERVER_ERROR',
+    status: err?.status ?? defaultStatus,
+    error: err?.code ?? httpStatus[500],
   });
 };

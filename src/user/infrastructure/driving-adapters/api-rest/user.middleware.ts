@@ -1,4 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
+import {UNAUTHORIZED} from 'http-status';
 
 export const userMiddleware = (
   req: Request,
@@ -9,7 +10,7 @@ export const userMiddleware = (
 
   if (!token) {
     res
-      .status(403)
+      .status(UNAUTHORIZED)
       .json({message: 'Unauthorized request. "authorization" is required.'});
   } else {
     next();

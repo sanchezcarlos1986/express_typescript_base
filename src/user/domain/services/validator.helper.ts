@@ -1,5 +1,6 @@
 import {validationResult} from 'express-validator';
 import {NextFunction, Request, Response} from 'express';
+import {UNPROCESSABLE_ENTITY} from 'http-status';
 
 type ValidationError = {
   value: string;
@@ -20,6 +21,6 @@ export const validateResult = (
     const errors = err?.errors.map((error: ValidationError) => ({
       [error?.param]: error?.msg,
     }));
-    res.status(403).send(errors);
+    res.status(UNPROCESSABLE_ENTITY).send(errors);
   }
 };

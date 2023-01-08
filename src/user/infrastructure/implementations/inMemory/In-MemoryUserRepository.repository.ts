@@ -10,6 +10,7 @@ export class InMemoryUserRepository implements UserRepository {
 
   async save(user: User): Promise<User> {
     this.userData.push(user);
+
     return user;
   }
 

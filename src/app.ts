@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import usersRoutes from './user/user.router';
+import usersRoutes from './user/infrastructure/driving-adapters/api-rest/user.router';
 import {errorHandler} from './errorHandlers';
 import {APP} from './shared/types';
 

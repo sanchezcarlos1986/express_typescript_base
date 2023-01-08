@@ -3,6 +3,8 @@ authorization: qwetr
 Content-Type: application/json
 
 {
-    "content": "Aquí tranqui aprendiendo Node!",
-    "important": true
+    "id": "2",
+    "name": "Carlos",
+    "username": "carlos1986",
+    "age": 36
 }

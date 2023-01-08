@@ -1,5 +1,5 @@
 import {UserCreatorUseCase} from '../../../application/useCases/UserCreator/UserCreator.usecase';
-import {InMemoryUserRepository} from '../../implementations/inMemory/inMemoryUserRepository.repository';
+import {InMemoryUserRepository} from '../../implementations/InMemory/In-MemoryUserRepository.repository';
 
 (async () => {
   const userCreatorUseCase = new UserCreatorUseCase(
