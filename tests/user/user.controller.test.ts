@@ -58,16 +58,15 @@ describe('GET /users', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
+  */
 
   // Delete
   it('should return 200 deleting one user', async () => {
     await request(app)
       .delete('/api/users/1')
       .set('authorization', 'thebest1token')
-      .expect(200)
-      .expect('Content-Type', /text\/html/);
+      .expect(200);
   });
-  */
 });
 
 afterAll(async () => {

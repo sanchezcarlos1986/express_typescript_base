@@ -1,8 +1,8 @@
-import {User} from '../../../domain/entities/user.entity';
-import {UserRepository} from '../../../domain/repositories/user.repository';
+import {User} from '../../../../domain/entities/user.entity';
+import {UserRepository} from '../../../../domain/repositories/user.repository';
 
 export class InMemoryUserRepository implements UserRepository {
-  private readonly userData: User[] = [];
+  private userData: User[] = [];
 
   async getAll(): Promise<User[]> {
     return this.userData;
@@ -26,11 +26,17 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
 
-  async delete(user: User): Promise<void> {
-    //
+  async delete(id: string): Promise<void> {
+    const filteredUsers = this.userData.filter((user: User) => user.id !== id);
+
+    this.userData = filteredUsers;
   }
 
   async getById(id: string): Promise<User | null> {
-    return null;
+    const userFound = this.userData.find((user: User) => user.id === id);
+
+    if (!userFound) return null;
+
+    return userFound;
   }
 }

@@ -1,8 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
-import {UserGetterUseCase} from '../../../../application/useCases/UserGetter/UserGetter.usecase';
+import {UserGetterUseCase} from '../../../../application/useCases/UserGetter.usecase';
+
 import {UserRepository} from '../../../../domain/repositories/user.repository';
 
-export const getUsers =
+export const getAllUsers =
   (repository: UserRepository) =>
   async (_req: Request, res: Response, next: NextFunction) => {
     try {

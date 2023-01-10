@@ -1,12 +1,23 @@
 import {NextFunction, Request, Response} from 'express';
-import {InMemoryUserRepository} from '../../../implementations/InMemory/In-MemoryUserRepository.repository';
-import {createUser} from './createUser.controller';
-import {getUsers} from './getUsers.controller';
+import {InMemoryUserRepository} from '../../../driven-adapters/implementations/InMemory/In-MemoryUserRepository.repository';
+import {getAllUsers} from './getAllUsers.controller';
+import {saveUser} from './saveUser.controller';
+import {updateUser} from './updateUser.controller';
+import {deleteUser} from './deleteUser.controller';
 
 const inMemoryRepository = new InMemoryUserRepository();
 
-export const create = (req: Request, res: Response, next: NextFunction) =>
-  createUser(inMemoryRepository)(req, res, next);
-
 export const getAll = (req: Request, res: Response, next: NextFunction) =>
-  getUsers(inMemoryRepository)(req, res, next);
+  getAllUsers(inMemoryRepository)(req, res, next);
+
+export const save = (req: Request, res: Response, next: NextFunction) =>
+  saveUser(inMemoryRepository)(req, res, next);
+
+export const update = (req: Request, res: Response, next: NextFunction) =>
+  updateUser(inMemoryRepository)(req, res, next);
+
+export const deleteCurrentUser = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => deleteUser(inMemoryRepository)(req, res, next);

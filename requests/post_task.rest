@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
     "id": "2",
-    "name": "Carlos",
-    "username": "carlos1986",
-    "age": 36
+    "name": "segundo",
+    "username": "second",
+    "age": 55
 }

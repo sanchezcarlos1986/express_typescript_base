@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 import {CREATED} from 'http-status';
-import {UserCreatorUseCase} from '../../../../application/useCases/UserCreator/UserCreator.usecase';
+import {UserCreatorUseCase} from '../../../../application/useCases/UserCreator.usecase';
 import {UserRepository} from '../../../../domain/repositories/user.repository';
 
-export const createUser =
+export const saveUser =
   (repository: UserRepository) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
