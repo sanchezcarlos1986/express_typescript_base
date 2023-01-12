@@ -30,7 +30,7 @@ describe('GET /users', () => {
         id: '1',
         name: 'carlos',
         username: 'carlos_1986',
-        age: 36,
+        age: 16,
       })
       .expect(CREATED)
       .expect('Content-Type', /application\/json/);
@@ -45,6 +45,7 @@ describe('GET /users', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
+  */
 
   // Put
   it('should return 200 updating one user', async () => {
@@ -52,13 +53,14 @@ describe('GET /users', () => {
       .put('/api/users/1')
       .set('authorization', 'thebest1token')
       .send({
+        id: '1',
         name: 'carlos',
-        lastName: 'sánchez sánchez',
+        username: 'carlos_1986',
+        age: 36,
       })
       .expect(200)
       .expect('Content-Type', /application\/json/);
   });
-  */
 
   // Delete
   it('should return 200 deleting one user', async () => {

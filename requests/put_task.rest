@@ -3,8 +3,8 @@ authorization: qwetr
 Content-Type: application/json
 
 {
-    "id": "2",
-    "name": "Carlitos",
-    "username": "carlos1986",
+    "id": "1",
+    "name": "segundo",
+    "username": "second",
     "age": 36
 }

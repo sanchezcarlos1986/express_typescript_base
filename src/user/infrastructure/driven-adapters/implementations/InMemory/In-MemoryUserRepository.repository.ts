@@ -23,6 +23,17 @@ export class InMemoryUserRepository implements UserRepository {
   }
 
   async update(user: User): Promise<User> {
+    const userFound = this.getById(user.id);
+
+    const currentUserIndex = this.userData.findIndex(
+      item => item.id === user.id,
+    );
+    const updatedUser = {
+      ...userFound,
+      ...user,
+    };
+    this.userData[currentUserIndex] = updatedUser;
+
     return user;
   }
 
